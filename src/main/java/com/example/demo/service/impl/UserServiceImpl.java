@@ -57,4 +57,11 @@ public class UserServiceImpl implements UserService {
             existingUser.setEmail(userDto.getEmail());
             return modelMapper.map(existingUser, UserDto.class);
     }
+
+    @Override
+    public void deleteUser(Long userId) {
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User is not found"));
+           userRepository.delete(existingUser);
+    }
 }

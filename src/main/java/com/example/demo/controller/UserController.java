@@ -34,10 +34,17 @@ public class UserController {
     public ResponseEntity <UserDto> getUserById(@PathVariable("id") Long id){
         return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
+
     @PutMapping("{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id,
                                               @RequestBody UserDto userDto){
         userDto.setId(id);
         return new ResponseEntity<>(userService.updateUser(userDto), HttpStatus.OK);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") Long id){
+        userService.deleteUser(id);
+        return new ResponseEntity<>("User successfully deleted", HttpStatus.OK);
     }
 }
