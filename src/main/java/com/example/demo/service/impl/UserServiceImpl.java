@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 
+
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -40,4 +41,10 @@ public class UserServiceImpl implements UserService {
                .toList();
     }
 
+    @Override
+    public UserDto getUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not Found"));
+        return modelMapper.map(user, UserDto.class);
+    }
 }
