@@ -8,6 +8,9 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -26,4 +29,15 @@ public class UserServiceImpl implements UserService {
         User savedUser = userRepository.save(user);
         return modelMapper.map(savedUser, UserDto.class);
     }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        List<User> users = userRepository.findAll();
+       return users
+               .stream()
+               .map(user -> modelMapper
+                       .map(user, UserDto.class))
+               .toList();
+    }
+
 }
