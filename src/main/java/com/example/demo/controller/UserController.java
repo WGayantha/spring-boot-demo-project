@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("api/users")
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -33,5 +33,11 @@ public class UserController {
     @GetMapping("{id}")
     public ResponseEntity <UserDto> getUserById(@PathVariable("id") Long id){
         return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
+    }
+    @PutMapping("{id}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id,
+                                              @RequestBody UserDto userDto){
+        userDto.setId(id);
+        return new ResponseEntity<>(userService.updateUser(userDto), HttpStatus.OK);
     }
 }
